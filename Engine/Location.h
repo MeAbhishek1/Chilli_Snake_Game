@@ -2,4 +2,5 @@
 struct Location{
 	int x;
 	int y;
+	
 };

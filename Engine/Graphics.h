@@ -61,6 +61,9 @@ public:
 	{
 		DrawRect( x0,y0,x0 + width,y0 + height,c );
 	}
+	void DrawRectWithPad(int x0, int y0, int width, int height, int pad, Color c) {
+		DrawRect(x0+pad, y0+pad, x0 + width - pad, y0  + height - pad, c);
+	}
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

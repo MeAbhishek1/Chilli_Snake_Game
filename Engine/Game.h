@@ -23,8 +23,11 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-
-
+#include "Snake.h"
+#include "Board.h"
+#include "Location.h"
+#include "Goal.h"
+#include "SpriteCodex.h"
 class Game
 {
 public:
@@ -43,6 +46,13 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-
+	Board brd;
+	Location headStart = { 2,3 };
+	Snake snek;
+	Location delta_loc;
+	Goal food;
+	int frameCount = 0;
+	bool isGameOver = false;
+	SpriteCodex sprite;
 	/********************************/
 };

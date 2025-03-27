@@ -21,11 +21,15 @@
 #include "MainWindow.h"
 #include "Game.h"
 
+
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
-
+	gfx( wnd ),
+	brd(gfx),
+	snek(headStart),
+	delta_loc({1,0}),
+	food()
 {
 }
 
@@ -39,9 +43,53 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if (!isGameOver) {
+
+
+		frameCount++;
+
+		if (wnd.kbd.KeyIsPressed(VK_UP)) {
+			delta_loc = { 0,-1 };
+			//snek.MoveBy(loc);
+
+		}
+		else if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
+			delta_loc = { 0,1 };
+			//snek.MoveBy(loc);
+		}
+		else if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
+			delta_loc = { -1,0 };
+			//snek.MoveBy(loc);
+
+		}
+		else if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
+			delta_loc = { 1,0 };
+			//snek.MoveBy(loc);
+		}
+		if (snek.nextIsInTile(delta_loc)) {
+			isGameOver = true;
+
+		}
+
+		if (frameCount > 20) {
+			if (snek.IsInTile(food.GetLocation())) {
+				snek.Grow();
+				food.Respawn();
+			}
+
+			snek.MoveBy(delta_loc);
+			frameCount = 0;
+		}
+	}
 }
 
 void Game::ComposeFrame()
 {
-
+	food.Draw(brd);
+	snek.Draw(brd);
+	if (isGameOver) {
+		sprite.DrawGameOver(300, 300, gfx);
+	}
+	//brd.Draw_Border(10, 10, Colors::Cyan);
+	
 }
